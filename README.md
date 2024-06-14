@@ -1,6 +1,14 @@
 # Urban.Grocers_Bootcamp_TripleTen
 
+Urban Grocers é uma plataforma interativa de entrega de kits de produtos com diferentes funcionalidades. Cada kit atende uma necessidade diferente do usuário. (Para situações específicas, preparar pratos ou um conjunto personalizado). 
+As funcionalidades testadas via API nessa sprint foram:
++ Visualizar e adicionar produtos nos kits;
++ Criar entregador, kit e cesta de produtos;
++ Visualizar pedido;
++ Excluir carrinho, entregador, kit, etc.
+
 <img scr=https://github.com/DharaYasmim/Urban-Grocers_Bootcamp_TripleTen/assets/170812908/72bda17c-d9be-4612-af0c-9dfd5990413d>
+
 
 
 ## Sprint 4 - Teste de API

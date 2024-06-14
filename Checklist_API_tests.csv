@@ -1,0 +1,933 @@
+,Checklist e resultados de teste para a API do Urban.Grocers,,,,
+,TRABALHO COM O CARRINHO,,,,
+,N,Descrição,Resultado esperado,Status,Link para o relatório de bug
+,"Pré-requisito 
+Criar carrinho POST /api/v1/orders",,,,
+,Adicionar alimentos ao carrinho PUT /api/v1/orders/:id,,,,
+,TEST_01,"Adicionar alimentos ao carrinho
+{
+    ""productsList"": [
+        {
+            ""id"": 1,
+            ""quantity"": 1
+        }
+    ]
+}",Código de resposta e status 200 OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos foram adicionados ao carrinho com sucesso,,
+,TEST_02,"Adicionar alimentos ao carrinho com ID com caracteres especiais
+{
+    ""productsList"": [
+        {
+            ""id"": ""@"",
+            ""quantity"": 1
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-1
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não foram adicionados ao carrinho,,
+,TEST_03,"Adicionar alimentos ao carrinho com ID tipo string
+{
+    ""productsList"": [
+        {
+            ""id"": ""um"",
+            ""quantity"": 1
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-3
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não foram adicionados ao carrinho,,
+,TEST_04,"Adicionar alimentos ao carrinho com ID vazio
+{
+    ""productsList"": [
+        {
+            ""id"": """",
+            ""quantity"": 1
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-4
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não foram adicionados ao carrinho,,
+,TEST_05,"Adicionar alimentos ao carrinho que não tem no estoque
+{
+    ""productsList"": [
+        {
+            ""id"": 1,
+            ""quantity"": 100
+        }
+    ]
+}",Código de resposta e status 409 - Conflict,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"""Não há depósito para processar o seu pedido""",,
+,TEST_06,"Adicionar alimentos ao carrinho com ""quantity"" de caractere especial
+{
+    ""productsList"": [
+        {
+            ""id"": 1,
+            ""quantity"": ""@""        
+        }
+    ]
+}",Código de resposta e status 409 - Conflict,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não foram adicionados ao carrinho,,
+,TEST_07,"Adicionar alimentos ao carrinho com ""quantity"" vazio
+{
+    ""productsList"": [
+        {
+            ""id"": 1,
+            ""quantity"": """"        
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-5
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não foram adicionados ao carrinho,,
+,TEST_08,"Adicionar alimentos ao carrinho com ""quantity"" tipo string
+{
+    ""productsList"": [
+        {
+            ""id"": 1,
+            ""quantity"": ""um""        
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não foram adicionados ao carrinho,,
+,TEST_09,"Adicionar alimentos ao carrinho com ""quantity"" e ""id"" vazio
+{
+    ""productsList"": [
+        {
+            ""id"": """",
+            ""quantity"": """"        
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-6
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não foram adicionados ao carrinho,,
+,TEST_10,"Adicionar alimentos ao carrinho com ""quantity"" inválido e ""id"" vazio
+{
+    ""productsList"": [
+        {
+            ""id"": """",
+            ""quantity"": ""@""        
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-8
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não foram adicionados ao carrinho,,
+,TEST_11,"Adicionar alimentos ao carrinho com ""quantity"" vazio e ""id"" inválido
+{
+    ""productsList"": [
+        {
+            ""id"": ""@"",
+            ""quantity"": """"        
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-7
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não foram adicionados ao carrinho,,
+,TEST_12,"Adicionar alimentos ao carrinho com ""quantity"" e ""id"" inválido
+{
+    ""productsList"": [
+        {
+            ""id"": ""@"",
+            ""quantity"": ""@""        
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-9
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não foram adicionados ao carrinho,,
+,TEST_13,"Adicionar alimentos que não existe no depósito ao carrinho
+{
+    ""productsList"": [
+        {
+            ""id"": 95,
+            ""quantity"": ""1""        
+        }
+    ]
+}",Código de resposta e status 409 - Conflict,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"""Não há depósito para processar o seu pedido""",,
+,TEST_14,"Adicionar alimentos a um carrinho inexistente
+ endpoint - PUT /api/v1/orders/3
+{
+    ""productsList"": [
+        {
+            ""id"": 1,
+            ""quantity"": 1      
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não foram adicionados ao carrinho,,
+,TEST_75,"Adicionar alimentos a um carrinho com valor de ID super longo (mínimo 20 caracteres)
+ endpoint - PUT /api/v1/orders/2
+{
+    ""productsList"": [
+        {
+            ""id"": 12547965215847521458,
+            ""quantity"": 1
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-31
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não foram adicionados ao carrinho,,
+,TEST_76,"Adicionar alimentos a um carrinho com valor de quantity super longo (mínimo 20 caracteres)
+ endpoint - PUT /api/v1/orders/2
+{
+    ""productsList"": [
+        {
+            ""id"": 1,
+            ""quantity"": 12547965215847521458
+        }
+    ]
+}",Código de resposta e status 409 - Conflict,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,Não há depósito para processar o seu pedido,,
+,TEST_77,"Adicionar alimentos a um carrinho com uma string vazia 
+ endpoint - PUT /api/v1/orders/2
+{
+""productsList"":[]
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-32
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_78,"Adicionar alimentos a um carrinho com um objeto válido em vez de um vetor  
+endpoint - PUT /api/v1/orders/2
+{
+    ""productsList"": {
+        ""id"": 1,
+        ""quantity"": 1
+    }
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-33
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_79,"Adicionar alimentos a um carrinho com uma string vazia  
+endpoint - PUT /api/v1/orders/2
+{
+    ""productsList"": """"
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-34
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_80,"Adicionar alimentos a um carrinho com ausência de ""id""  
+endpoint - PUT /api/v1/orders/2
+{
+    ""productsList"": [
+        {
+            ""quantity"": 1
+        }
+    ]
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-35
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_81,"Adicionar alimentos a um carrinho com ausência de ""quantity""  
+endpoint - PUT /api/v1/orders/2
+{
+    ""productsList"": [
+        {
+            ""id"": 1
+        }
+    ]
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-36
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_82,"Adicionar alimentos a um carrinho com a ausência de ""productsList"" (corpo da solicitação vazio).  endpoint - PUT /api/v1/orders/2",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-37
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,,,,,
+,Receber lista de produtos adicionados ao carrinho GET /api/v1/orders/:id,,,,
+,"Pré-requisitos 
+Criar carrinho POST /api/v1/orders
+Gerar um cabeçalho de autenticação para um usuário recentemente criado POST /api/v1/users",,,,
+,TEST_16,"Listar produtos do carrinho com cabeçalho de autorização
+endpoint - GET /api/v1/orders/:id",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,Os itens do carrinho foram recebidos com sucesso,,
+,TEST_17,"Listar produtos do carrinho com cabeçalho de autorização e carrinho/pedido inexistente (id = 3)
+endpoint - GET /api/v1/orders/3",Código de resposta e status 404 Not found.,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,O carrinho não foi encontrado,,
+,,,,,
+,A capacidade de excluir o carrinho DELETE /api/v1/orders/:id,,,,
+,"Pré-requisitos 
+Criar carrinho POST /api/v1/orders",,,,
+,TEST_18,"Deletar carrinho de compras existente
+endpoint DELETE /api/v1/orders/2",Código de resposta e status 200 - OK,REPROVADO,https://dharayf.atlassian.net/browse/S4-11
+,,,Não há erros na estrutura da resposta,,
+,,,O carrinho foi excluído com sucesso,,
+,TEST_19,"Deletar carrinho de compras inexistente
+endpoint DELETE /api/v1/orders/3",Código de resposta e status 404 - Not found,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,O carrinho não foi localizado,,
+,,,,,
+,TRABALHO COM O KITS,,,,
+,N,Descrição,Resultado esperado,Status,Link para o relatório de bug
+,Adicionar itens ao kit POST /api/v1/kits/:id/products,,,,
+,TEST_20,"Enviar requisição POST para inserir um item no kit:
+endpoint POST /api/v1/kits/:id/products
+{
+  ""productsList"": [
+    {
+      ""id"": 1,
+      ""quantity"": 1
+    }
+  ]
+}",Código de resposta e status 200 OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,Item adicionado com sucesso,,
+,TEST_21,"Enviar requisição POST para inserir um item em kit inexistente
+endpoint POST /api/v1/kits/8/products
+{
+  ""productsList"": [
+    {
+      ""id"": 1,
+      ""quantity"": 1
+    }
+  ]
+}",Código de resposta e status 404 Not Found,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,Kit não foi encontrado,,
+,TEST_22,"Enviar requisição POST para adicionar novos alimentos quando o comprimento da lista de produtos resultantes exceder 30.
+endpoint POST /api/v1/kits/1/products
+{
+    ""productsList"": [
+        {
+            ""id"": 10,
+            ""quantity"": 1
+        },
+        {
+            ""id"": 16,
+            ""quantity"": 1
+        },
+       {
+            ""id"": 15,
+            ""quantity"": 1
+        }
+    ]
+}",Código de resposta e status 400 BAD REQUEST,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não adicionados ao carrinho,,
+,TEST_23,"Enviar requisição POST para inserir um item inexistente no kit:
+{
+  ""productsList"": [
+    {
+      ""id"": 0,
+      ""quantity"": 1
+    }
+  ]
+}",Código de resposta e status 404 Not Found,REPROVADO,https://dharayf.atlassian.net/browse/S4-12
+,,,Não há erros na estrutura da resposta,,
+,,,Item não encontrado,,
+,TEST_24,"Enviar requisição POST para inserir no kit uma quantidade excedente de itens (Não tem no estoque):
+{
+  ""productsList"": [
+    {
+      ""id"": 2,
+      ""quantity"": 100
+    }
+  ]
+}",Código de resposta e status 409 - Conflict,REPROVADO,https://dharayf.atlassian.net/browse/S4-13
+,,,Não há erros na estrutura da resposta,,
+,,,Error: Quantidade de itens não existente no depósito,,
+,TEST_25,"Adicionar itens ao kit com ID com caracteres especiais
+{
+    ""productsList"": [
+        {
+            ""id"": ""@"",
+            ""quantity"": 1
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-14
+,,,Não há erros na estrutura da resposta,,
+,,,Item não adicionado ao kit,,
+,TEST_26,"Adicionar itens ao kit com ID tipo string
+{
+    ""productsList"": [
+        {
+            ""id"": ""um"",
+            ""quantity"": 1
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-15
+,,,Não há erros na estrutura da resposta,,
+,,,Item não adicionado ao kit,,
+,TEST_27,"Adicionar itens ao kit com ID vazio
+{
+    ""productsList"": [
+        {
+            ""id"": """",
+            ""quantity"": 1
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-16
+,,,Não há erros na estrutura da resposta,,
+,,,Item não adicionado ao kit,,
+,TEST_29,"Adicionar itens ao kit com ""quantity"" de caractere especial
+{
+    ""productsList"": [
+        {
+            ""id"": 1,
+            ""quantity"": ""@""        
+        }
+    ]
+}",Código de resposta e status 409 - Conflict,REPROVADO,https://dharayf.atlassian.net/browse/S4-17
+,,,Não há erros na estrutura da resposta,,
+,,,Item não adicionado ao kit,,
+,TEST_30,"Adicionar itens ao kit com ""quantity"" vazio
+{
+    ""productsList"": [
+        {
+            ""id"": 1,
+            ""quantity"": """"        
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-18
+,,,Não há erros na estrutura da resposta,,
+,,,Item não adicionado ao kit,,
+,TEST_31,"Adicionar itens ao kit com ""quantity"" tipo string
+{
+    ""productsList"": [
+        {
+            ""id"": 1,
+            ""quantity"": ""um""        
+        }
+    ]
+}",Código de resposta e status 400 - Bad Request,REPROVADO,https://dharayf.atlassian.net/browse/S4-19
+,,,Não há erros na estrutura da resposta,,
+,,,Item não adicionado ao kit,,
+,TEST_32,"Adicionar itens ao kit com ""quantity"" e ""id"" vazio
+{
+    ""productsList"": [
+        {
+            ""id"": """",
+            ""quantity"": """"        
+        }
+    ]
+}",Código de resposta e status 400 - Bad Request,REPROVADO,https://dharayf.atlassian.net/browse/S4-20
+,,,Não há erros na estrutura da resposta,,
+,,,Item não adicionado ao kit,,
+,TEST_33,"Adicionar itens ao kit com ""quantity"" inválido e ""id"" vazio
+{
+    ""productsList"": [
+        {
+            ""id"": """",
+            ""quantity"": ""@""        
+        }
+    ]
+}",Código de resposta e status 400 - Bad Request,REPROVADO,https://dharayf.atlassian.net/browse/S4-21
+,,,Não há erros na estrutura da resposta,,
+,,,Item não adicionado ao kit,,
+,TEST_34,"Adicionar alimentos ao carrinho com ""quantity"" vazio e ""id"" inválido
+{
+    ""productsList"": [
+        {
+            ""id"": ""@"",
+            ""quantity"": """"        
+        }
+    ]
+}",Código de resposta e status 400 - Bad Request,REPROVADO,https://dharayf.atlassian.net/browse/S4-23
+,,,Não há erros na estrutura da resposta,,
+,,,Item não adicionado ao kit,,
+,TEST_35,"Adicionar itens ao kit com ""quantity"" e ""id"" inválidos
+{
+    ""productsList"": [
+        {
+            ""id"": ""@"",
+            ""quantity"": ""@""        
+        }
+    ]
+}",Código de resposta e status 400 - Bad Request,REPROVADO,https://dharayf.atlassian.net/browse/S4-22
+,,,Não há erros na estrutura da resposta,,
+,,,Item não adicionado ao kit,,
+,TEST_53,"Criar um carrinho com valor de ID super longo (mínimo 20 caracteres)
+ endpoint - POST /api/v1/orders
+{
+    ""productsList"": [
+        {
+            ""id"": 12547965215847521458,
+            ""quantity"": 1
+        }
+    ]
+}",Código de resposta e status 400 - Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-38
+,,,Não há erros na estrutura da resposta,,
+,,,Alimentos não foram adicionados ao carrinho,,
+,TEST_54,"Criar um carrinho com valor de quantity super longo (mínimo 20 caracteres)
+ endpoint - POST /api/v1/orders
+{
+    ""productsList"": [
+        {
+            ""id"": 1,
+            ""quantity"": 12547965215847521458
+        }
+    ]
+}",Código de resposta e status 409 - Conflict,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,Não há depósito para processar o seu pedido,,
+,TEST_55,"Criar um carrinho com uma string vazia 
+ endpoint - POST /api/v1/orders
+{
+""productsList"":[]
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-39
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_56,"Criar um carrinho com um objeto válido em vez de um vetor  
+endpoint - POST /api/v1/orders
+{
+    ""productsList"": {
+        ""id"": 1,
+        ""quantity"": 1
+    }
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-40
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_57,"Criar um carrinho com uma string vazia  
+endpoint - POST /api/v1/orders
+{
+    ""productsList"": """"
+}",Código de resposta e status - 400 Bad request,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_58,"Criar um carrinho com ausência de ""id""  
+endpoint - POST /api/v1/orders
+{
+    ""productsList"": [
+        {
+            ""quantity"": 1
+        }
+    ]
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-41
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_59,"Criar um carrinho com ausência de ""quantity""  
+endpoint - POST /api/v1/orders
+{
+    ""productsList"": [
+        {
+            ""id"": 1
+        }
+    ]
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-42
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_60,"Criar um carrinho com a ausência de ""productsList"" (corpo da solicitação vazio).  
+endpoint - POST /api/v1/orders",Código de resposta e status - 400 Bad request,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,,,,,
+,TRABALHO COM ENTREGAS,,,,
+,Trabalho com serviços de entrega POST /order-and-go/v1/delivery,,,,
+,Order and Go / Tempo de entrega: 08-22 / Quantidade de itens: 0-9 / Peso dos produtos: 0-3 kg / Tempo de entrega: 20-25 min / Valor da entrega: 3,,,,
+,TEST_36,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 8,
+    ""productsCount"": 5,
+    ""productsWeight"": 2
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 3,
+    ""clientDeliveryCost"": 0",,
+,TEST_36,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 7,
+    ""productsCount"": 5,
+    ""productsWeight"": 2
+}",Código de resposta e status 200 - OK,REPROVADO,https://dharayf.atlassian.net/browse/S4-24
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": false",,
+,TEST_37,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 9,
+    ""productsCount"": 5,
+    ""productsWeight"": 2
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 3,
+    ""clientDeliveryCost"": 0",,
+,TEST_38,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 22,
+    ""productsCount"": 5,
+    ""productsWeight"": 2
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 3,
+    ""clientDeliveryCost"": 0",,
+,TEST_39,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 21,
+    ""productsCount"": 5,
+    ""productsWeight"": 2
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 3,
+    ""clientDeliveryCost"": 0",,
+,TEST_39,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 23,
+    ""productsCount"": 5,
+    ""productsWeight"": 2
+}",Código de resposta e status 200 - OK,REPROVADO,https://dharayf.atlassian.net/browse/S4-25
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": false",,
+,Order and Go / Tempo de entrega: 08-22 / Quantidade de itens: 0-9 / Peso dos produtos: 0-3 kg / Tempo de entrega: 20-25 min / Valor da entrega: 3,,,,
+,TEST_39,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 0,
+    ""productsWeight"": 2
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 3,
+    ""clientDeliveryCost"": 0",,
+,TEST_39,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 1,
+    ""productsWeight"": 2
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 3,
+    ""clientDeliveryCost"": 0",,
+,TEST_39,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 8,
+    ""productsWeight"": 2
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 3,
+    ""clientDeliveryCost"": 0",,
+,TEST_39,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 9,
+    ""productsWeight"": 2
+}",Código de resposta e status 200 - OK,REPROVADO,https://dharayf.atlassian.net/browse/S4-26
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 3,
+    ""clientDeliveryCost"": 0",,
+,TEST_39,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 10,
+    ""productsWeight"": 2
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 5,
+    ""clientDeliveryCost"": 0",,
+,Order and Go / Tempo de entrega: 08-22 / Quantidade de itens: 0-9 / Peso dos produtos: 0-3 kg / Tempo de entrega: 20-25 min / Valor da entrega: 3,,,,
+,TEST_40,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 5,
+    ""productsWeight"": 0
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 3,
+    ""clientDeliveryCost"": 0",,
+,TEST_41,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 5,
+    ""productsWeight"": 3
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 3,
+    ""clientDeliveryCost"": 0",,
+,TEST_42,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 5,
+    ""productsWeight"": 2.9
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 3,
+    ""clientDeliveryCost"": 0",,
+,TEST_43,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 5,
+    ""productsWeight"": 0.1
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 3,
+    ""clientDeliveryCost"": 0",,
+,TEST_43,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 5,
+    ""productsWeight"": 3.1
+}",Código de resposta e status 200 - OK,REPROVADO,https://dharayf.atlassian.net/browse/S4-28
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 5,
+    ""clientDeliveryCost"": 0",,
+,Order and Go / Tempo de entrega: 08-22 / Quantidade de itens: 10-15 / Peso dos produtos: 3.1-6 kg / Tempo de entrega: 20-25 min / Valor da entrega: 5,,,,
+,TEST_44,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 10,
+    ""productsWeight"": 4.5
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 5,
+    ""clientDeliveryCost"": 0",,
+,TEST_45,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 11,
+    ""productsWeight"": 4.5
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 5,
+    ""clientDeliveryCost"": 0",,
+,TEST_45,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 9,
+    ""productsWeight"": 4.5
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 5,
+    ""clientDeliveryCost"": 0",,
+,TEST_46,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 14,
+    ""productsWeight"": 4.5
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 5,
+    ""clientDeliveryCost"": 9",,
+,TEST_47,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 15,
+    ""productsWeight"": 4,5
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 5,
+    ""clientDeliveryCost"": 0",,
+,TEST_47,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 16,
+    ""productsWeight"": 4,5
+}",Código de resposta e status 200 - OK,REPROVADO,https://dharayf.atlassian.net/browse/S4-27
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": false",,
+,Order and Go / Tempo de entrega: 08-22 / Quantidade de itens: 10-15 / Peso dos produtos: 3.1-6 kg / Tempo de entrega: 20-25 min / Valor da entrega: 5,,,,
+,TEST_48,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 12,
+    ""productsWeight"": 3.1
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 5,
+    ""clientDeliveryCost"": 0",,
+,TEST_49,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 12,
+    ""productsWeight"": 3.2
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 5,
+    ""clientDeliveryCost"": 0",,
+,TEST_49,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 12,
+    ""productsWeight"": 3
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 5,
+    ""clientDeliveryCost"": 0",,
+,TEST_50,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 12,
+    ""productsWeight"": 6
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 5,
+    ""clientDeliveryCost"": 0",,
+,TEST_51,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 12,
+    ""productsWeight"": 5.9
+}",Código de resposta e status 200 - OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": true,
+    ""hostDeliveryCost"": 5,
+    ""clientDeliveryCost"": 0",,
+,TEST_52,"Calcular serviço de entrega ""Order and Go""
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 12,
+    ""productsWeight"": 6.1
+}",Código de resposta e status 200 - OK,REPROVADO,https://dharayf.atlassian.net/browse/S4-29
+,,,Não há erros na estrutura da resposta,,
+,,,"    ""isItPossibleToDeliver"": false",,
+,TEST_62,"Calcular serviço de entrega ""Order and Go"" com parâmetros ausentes 
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""productsCount"": 12,
+    ""productsWeight"": 4
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-43
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_63,"Calcular serviço de entrega ""Order and Go"" com parâmetros ausentes
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsWeight"": 4
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-44
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_64,"Calcular serviço de entrega ""Order and Go"" com parâmetros ausentes
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 12
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-45
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_65,"Calcular serviço de entrega ""Order and Go"" com parâmetros ausentes
+endpoint: POST /order-and-go/v1/delivery
+{
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-46
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_66,"Calcular serviço de entrega ""Order and Go"" com valores inválidos
+{
+    ""deliveryTime"": ""@@"",
+    ""productsCount"": 12,
+    ""productsWeight"": 4
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-47
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_67,"Calcular serviço de entrega ""Order and Go"" com valores inválidos
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": ""@@"",
+    ""productsWeight"": 4
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-48
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_68,"Calcular serviço de entrega ""Order and Go"" com valores inválidos
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 5,
+    ""productsWeight"": ""@@""
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-49
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_69,"Calcular serviço de entrega ""Order and Go"" com frações
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12.5,
+    ""productsCount"": 12,
+    ""productsWeight"": 4
+}",Código de resposta e status - 200 OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"""    """"isItPossibleToDeliver"""": true,
+    """"hostDeliveryCost"""": 5,
+    """"clientDeliveryCost"""": 0""",,
+,TEST_70,"Calcular serviço de entrega ""Order and Go"" com frações
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 12.5,
+    ""productsWeight"": 4
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-50
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_71,"Calcular serviço de entrega ""Order and Go"" com frações
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 12,
+    ""productsWeight"": 4.5
+}",Código de resposta e status - 200 OK,APROVADO,
+,,,Não há erros na estrutura da resposta,,
+,,,"""    """"isItPossibleToDeliver"""": true,
+    """"hostDeliveryCost"""": 5,
+    """"clientDeliveryCost"""": 0""",,
+,TEST_72,"Calcular serviço de entrega ""Order and Go"" com valores super longos
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 122222222200000000000000,
+    ""productsCount"": 7,
+    ""productsWeight"": 4
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-51
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_73,"Calcular serviço de entrega ""Order and Go"" com valores super longos
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 122222222200000000000000,
+    ""productsWeight"": 4
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-52
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
+,TEST_74,"Calcular serviço de entrega ""Order and Go"" com valores super longos
+endpoint: POST /order-and-go/v1/delivery
+{
+    ""deliveryTime"": 12,
+    ""productsCount"": 7,
+    ""productsWeight"": 122222222200000000000000
+}",Código de resposta e status - 400 Bad request,REPROVADO,https://dharayf.atlassian.net/browse/S4-53
+,,,Não há erros na estrutura da resposta,,
+,,,"""Nem todos os parâmetros foram passados""",,
